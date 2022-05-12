@@ -1,32 +1,36 @@
-function createBurger(name, price, calories) {
-  this.name = name;
-  this.price = price;
-  this.calories = calories;
+function Hamburger(size) {
+  this.burger = size;
+  this.modifiers = [];
 
-  this.getPrice = function() {
-    return this.price;
-  }
-  this.getCalories = function() {
-    return this.calories;
-  }
-  this.addModifierPrice = function(modifier) {
-    return this.price + modifier;
-  }
-  this.addModifierCalories = function(modifier) {
-    return this.calories + modifier;
+  this.getPrice = () => this.burger.price;
+  
+  this.getCalories = () => this.burger.calories;
+  
+  this.addModifier = (modifier) => {
+      this.burger.price += modifier.price;
+      this.burger.calories += modifier.calories;
+      this.modifiers.push(modifier);
   }
 }
 
-const SIZE_SMALL = new createBurger('SIZE_SMALL', 50, 20);
-const SIZE_MIDDLE = new createBurger('SIZE_MIDDLE', 75, 30);
-const SIZE_BIG = new createBurger('SIZE_BIG', 100, 40);
-const CHEESE = new createBurger('CHEESE', 10, 20);
-const SALAD = new createBurger('SALAD', 20, 5);
-const POTATO = new createBurger('POTATO', 15, 10);
-const SPIECES = new createBurger('SPIECES', 15, 0);
-const TOPPING_MAYO = new createBurger('TOPPING_MAYO', 20, 5);
+const SIZE_SMALL = {price: 50, calories: 20};
+const SIZE_MIDDLE = {price: 75, calories: 30};
+const SIZE_BIG = {price: 100, calories: 400};
 
-console.log(`Price with POTATO: ${SIZE_BIG.addModifierPrice(POTATO.price)}`);
-console.log(`Calories with TOPPING_MAYO: ${SIZE_SMALL.addModifierCalories(TOPPING_MAYO.calories)}`);
+const TOPPING_MAYO = {name: 'Mayo', price: 20, calories: 5};
+const POTATO = {name: 'Potato', price: 15, calories: 10};
+const CHEESE = {name: 'Cheese', price: 10, calories: 20};
+const SALAD = {name: 'Salad', price: 20, calories: 5};
+const SPICES = {name: 'Spices', price: 15, calories: 0};
 
+const hamburger = new Hamburger(SIZE_BIG);
 
+hamburger.addModifier(TOPPING_MAYO);
+hamburger.addModifier(SPICES);
+hamburger.addModifier(POTATO);
+hamburger.addModifier(CHEESE);
+hamburger.addModifier(SALAD);
+
+console.log(hamburger.getPrice());
+console.log(hamburger.getCalories());
+console.log(hamburger.modifiers);
